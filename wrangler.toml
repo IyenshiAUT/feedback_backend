@@ -6,7 +6,7 @@ compatibility_date = "2024-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "team-mimh-feedback"
-database_id = "YOUR_DATABASE_ID_HERE"  # Replace with your actual D1 database ID
+database_id = "1641a7bd-84cb-4332-a295-b1b4d837eeb7"  # Replace with your actual D1 database ID
 
 [vars]
 ENVIRONMENT = "production"
