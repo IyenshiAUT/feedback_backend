@@ -17,12 +17,19 @@ export async function onRequest(context) {
   // Set D1 database globally for compatibility with existing code
   globalThis.DB = env.DB;
 
-  // CORS headers
+  const allowedOrigins = [
+    'https://mimh-project-feedback.iyenshiaut.workers.dev',
+    'http://localhost:3000' // for local development
+  ];
+  const origin = request.headers.get('Origin');
   const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   };
+
+  if (origin && allowedOrigins.includes(origin)) {
+    corsHeaders['Access-Control-Allow-Origin'] = origin;
+  }
 
   // Handle CORS preflight
   if (request.method === 'OPTIONS') {
