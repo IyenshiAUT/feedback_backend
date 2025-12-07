@@ -21,6 +21,7 @@ export async function onRequest(context) {
   const corsHeaders = {
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Max-Age': '86400',
   };
 
   // Allow requests from the Pages deployment (including preview URLs)
@@ -28,10 +29,14 @@ export async function onRequest(context) {
     origin === 'https://mimh-project-feedback-collection.pages.dev' ||
     origin.endsWith('.mimh-project-feedback-collection.pages.dev') ||
     origin === 'https://mimh-project-feedback.iyenshiaut.workers.dev' ||
+    origin.endsWith('.feedback-backend.pages.dev') ||
     origin === 'http://localhost:3000' ||
     origin === 'http://localhost:5173'
   )) {
     corsHeaders['Access-Control-Allow-Origin'] = origin;
+  } else {
+    // Fallback for debugging - you can remove this in production
+    corsHeaders['Access-Control-Allow-Origin'] = '*';
   }
 
   // Handle CORS preflight
