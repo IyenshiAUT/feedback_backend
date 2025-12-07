@@ -17,17 +17,20 @@ export async function onRequest(context) {
   // Set D1 database globally for compatibility with existing code
   globalThis.DB = env.DB;
 
-  const allowedOrigins = [
-    'https://mimh-project-feedback.iyenshiaut.workers.dev',
-    'http://localhost:3000' // for local development
-  ];
   const origin = request.headers.get('Origin');
   const corsHeaders = {
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   };
 
-  if (origin && allowedOrigins.includes(origin)) {
+  // Allow requests from the Pages deployment (including preview URLs)
+  if (origin && (
+    origin === 'https://mimh-project-feedback-collection.pages.dev' ||
+    origin.endsWith('.mimh-project-feedback-collection.pages.dev') ||
+    origin === 'https://mimh-project-feedback.iyenshiaut.workers.dev' ||
+    origin === 'http://localhost:3000' ||
+    origin === 'http://localhost:5173'
+  )) {
     corsHeaders['Access-Control-Allow-Origin'] = origin;
   }
 
